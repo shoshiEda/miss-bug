@@ -11,41 +11,22 @@ export function UserDetails() {
 
     const user = userService.getLoggedinUser()
     const { userId } = useParams()
-    const [userBugs,setUserBugs]=useState(null)
 
-  
-  useEffect(() => {
-    if (user._id===userId || user.isAdmin)
-    getBugsByUser(userId)
-}, [])
-  
-  
-  
-    function getBugsByUser(userId)
-  {
-    const filterBy={
-        userId
-    }
-    bugService.query(filterBy)
-    .then(bugs=>setUserBugs(bugs))
-    .catch(err=> showErrorMsg(err))
-  }
-    
+ 
 
 
-
-
-    if (user._id!==userId && !user.isAdmin) return <h1>Error! you are not the user</h1>
+console.log(user,user.bugs)
+    if (user._id!==userId) return <h1>Error! you are not the user</h1>
     if (!user) return <h1>loadings....</h1>
     return(
         <section className='user-details'>
         <h1>hello{user.fullname}</h1>
-        {!userBugs && <h2>you have no bugs yet...</h2>}
+        {(!user.bugs || !user.bugs.length) && <h2>you have no bugs yet...</h2>}
 
-        {userBugs &&
+        {user.bugs && user.bugs.length>0 &&
         <section>
         <h2>your bugs are:</h2>
-                <BugList bugs={userBugs} isUser={true} />
+                <BugList bugs={user.bugs} isUser={true} />
                 </section>
         }
         </section>

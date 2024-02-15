@@ -22,7 +22,6 @@ app.get('/api/bug', (req, res) => {
         labels: req.query.labels || '',
         pageIdx: req.query.pageIdx,
         sortBy: req.query.sortBy || '',
-        userId:req.query.userId || ''
     }
    
 
@@ -46,6 +45,7 @@ app.post('/api/bug', (req, res) => {
     }
 
     bugBackService.save(bugToSave , loggedinUser)
+        .then(userService.addBugsToUser(loggedinUser,bugToSave))
         .then(bug => res.send(bug ))
         .catch((err) => {
             loggerService.error('Cannot save bug', err)

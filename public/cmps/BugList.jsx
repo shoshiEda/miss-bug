@@ -12,7 +12,6 @@ export function BugList({ bugs, onRemoveBug, onEditBug,isUser }) {
 
     function isOwner(bug) {
         if (!user) return false
-        if (!bug.creator) return false
         return  user.isAdmin || bug.creator._id === user._id
     }
 
@@ -21,6 +20,7 @@ export function BugList({ bugs, onRemoveBug, onEditBug,isUser }) {
         <section>
         {!isUser && <ul className="bug-list">
             {bugs.map((bug) => (
+    
             <li key={bug._id} className="bug-preview" >
                     
                     <BugPreview bug={bug} />

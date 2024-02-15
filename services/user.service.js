@@ -12,7 +12,8 @@ export const userService = {
     save,
     checkLogin,
     getLoginToken,
-    validateToken
+    validateToken,
+    addBugsToUser
 }
 
 
@@ -35,6 +36,7 @@ function checkLogin({ username, password }) {
             _id : user._id,
             fullname : user.fullname,
             isAdmin : user.isAdmin,
+            bugs:user.bugs || [],
         }
     }
     return Promise.resolve(user)
@@ -60,6 +62,24 @@ function save(user) {
     // TODO: severe security issue- attacker can post admins
     users.push(user)
     return _saveUsersToFile().then(() => user)
+
+}
+
+function addBugsToUser(user,bug){
+    var userToSave = users.find(oldUser => oldUser.username === user.username)
+
+    const bugToSave={
+        title:bug.title,
+        severity:bug.severity,
+        description:bug.description,
+        _id:bug._id,
+        createdAt:bug.createdAt,
+    }    
+    userToSave.bugs=[]
+    userToSave.bugs.push(bugToSave)
+    const userIdx = users.findIndex(currUser => currUser._id === user._id)
+    users[userIdx]=user
+    return _saveUsersToFile().then(() => userToSave)
 
 }
 

@@ -45,6 +45,7 @@ function onSetUser(user) {
                 < section >
 
                     <Link to={`/user/${user._id}`}>Hello {user.fullname}</Link>
+                    {user.isAdmin && <button><Link to={`/admin`}></Link>Users list</button>}
                     <button onClick={onLogout}>Logout</button>
                 </ section >
             ) : (

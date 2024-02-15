@@ -143,3 +143,28 @@
 15.2.2024, 18:01:12 - INFO - Server listening on port http://127.0.0.1:3030/
 15.2.2024, 18:02:02 - INFO - Server listening on port http://127.0.0.1:3030/
 15.2.2024, 18:02:12 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 19:11:48 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 19:15:32 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 19:15:56 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 19:17:22 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 19:19:15 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 19:19:44 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 19:20:18 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 19:22:23 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 19:22:35 - ERROR - Cannot save bug | TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Object'
+    |     property 'creator' -> object with constructor 'Object'
+    |     property 'bugs' -> object with constructor 'Array'
+    --- index 0 closes the circle
+15.2.2024, 19:25:19 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 19:25:29 - ERROR - Cannot save bug | TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Object'
+    |     property 'creator' -> object with constructor 'Object'
+    |     property 'bugs' -> object with constructor 'Array'
+    --- index 0 closes the circle
+15.2.2024, 19:26:02 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 19:31:28 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 19:35:42 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 19:38:26 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 20:55:31 - INFO - Server listening on port http://127.0.0.1:3030/
+15.2.2024, 20:58:00 - INFO - Server listening on port http://127.0.0.1:3030/

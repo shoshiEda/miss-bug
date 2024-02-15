@@ -18,11 +18,6 @@ const bugs = utilService.readJsonFile('data/bug.json')
 function query(filterBy) {
     console.log(filterBy)
     let bugsToReturn = bugs
-
-    if(filterBy.userId){
-        bugsToReturn = bugsToReturn.filter(bug => (bug.creator && bug.creator._id===filterBy.userId))
-    return Promise.resolve(bugsToReturn)
-    }
    
         if (filterBy.txt) {
         
