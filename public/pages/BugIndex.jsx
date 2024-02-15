@@ -1,4 +1,5 @@
 import { bugService } from '../services/bug.service.js'
+import { userService } from '../services/user.service.js'
 import { utilService } from '../services/util.service.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { BugList } from '../cmps/BugList.jsx'
@@ -71,6 +72,7 @@ else
             title: prompt('Bug title?'),
             severity: +prompt('Bug severity?'),
         }
+        if(!title) return
         bugService
             .save(bug)
             .then((savedBug) => {

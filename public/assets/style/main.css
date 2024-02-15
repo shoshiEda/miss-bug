@@ -1,9 +1,12 @@
 body {
-    max-width: 600px;
+    max-width: 800px;
     margin: auto;
 }
 
 header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: lightskyblue;
     padding: 10px;
 }

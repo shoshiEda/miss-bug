@@ -1,4 +1,5 @@
 import { bugBackService } from './services/bug.service.js'
+import { userService } from './services/user.service.js'
 import { loggerService } from './services/logger.service.js'
 import express from 'express'
 import cookieParser from 'cookie-parser'
@@ -93,7 +94,40 @@ app.delete('/api/bug/:id', (req, res) => {
         })
 })
 
+// AUTH API
 
+app.post('/api/auth/login', (req, res) => {
+    const credentials = req.body
+    userService.checkLogin(credentials)
+        .then(user => {
+            if (user) {
+                const loginToken = userService.getLoginToken(user)
+                res.cookie('loginToken', loginToken)
+                res.send(user)
+            } else {
+                res.status(401).send('Invalid Credentials')
+            }
+        })
+})
+
+app.post('/api/auth/signup', (req, res) => {
+    const credentials = req.body
+    userService.save(credentials)
+        .then(user => {
+            if (user) {
+                const loginToken = userService.getLoginToken(user)
+                res.cookie('loginToken', loginToken)
+                res.send(user)
+            } else {
+                res.status(400).send('Cannot signup')
+            }
+        })
+})
+
+app.post('/api/auth/logout', (req, res) => {
+    res.clearCookie('loginToken')
+    res.send('logged-out!')
+})
 
 
 
