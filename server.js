@@ -1,8 +1,11 @@
+import express from 'express'
+import cookieParser from 'cookie-parser'
+
+
 import { bugBackService } from './services/bug.service.js'
 import { userService } from './services/user.service.js'
 import { loggerService } from './services/logger.service.js'
-import express from 'express'
-import cookieParser from 'cookie-parser'
+
 
 const app = express()
 
@@ -29,6 +32,9 @@ app.get('/api/bug', (req, res) => {
 })
 
 app.post('/api/bug', (req, res) => {
+    console.log(req)
+    const loggedinUser = userService.validateToken(req.cookies.loginToken)
+    if (!loggedinUser) return res.status(401).send('Cannot add bug')
 
     const bugToSave = {
         title: req.body.title,
@@ -36,8 +42,8 @@ app.post('/api/bug', (req, res) => {
         description: req.body.description,
     }
 
-    bugBackService.save(bugToSave)
-        .then(bug => res.send(bug))
+    bugBackService.save(bugToSave , loggedinUser)
+        .then(bug => res.send(bug ))
         .catch((err) => {
             loggerService.error('Cannot save bug', err)
             res.status(400).send('Cannot save bug')
@@ -47,6 +53,9 @@ app.post('/api/bug', (req, res) => {
 
 // Edit Car (UPDATE)
 app.put('/api/bug', (req, res) => {
+    const loggedinUser = userService.validateToken(req.cookies.loginToken)
+    if (!loggedinUser) return res.status(401).send('Cannot update bug')
+
     const bugToSave = {
         title: req.body.title,
         severity: req.body.severity,
@@ -54,7 +63,7 @@ app.put('/api/bug', (req, res) => {
         _id: req.body._id
     }
 
-    bugBackService.save(bugToSave)
+    bugBackService.save(bugToSave, loggedinUser)
         .then(bug => res.send(bug))
         .catch((err) => {
             loggerService.error('Cannot save bug', err)
@@ -85,8 +94,12 @@ app.get('/api/bug/:id', (req, res) => {
 
 // Remove Car (DELETE)
 app.delete('/api/bug/:id', (req, res) => {
+
+    const loggedinUser = userService.validateToken(req.cookies.loginToken)
+    if (!loggedinUser) return res.status(401).send('Cannot remove bug')
+
     const bugId = req.params.id
-    bugBackService.remove(bugId)
+    bugBackService.remove(bugId, loggedinUser)
         .then(() => res.send(bugId))
         .catch((err) => {
             loggerService.error('Cannot remove car', err)

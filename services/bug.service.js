@@ -1,5 +1,7 @@
 import fs from 'fs'
 import { utilService } from "./util.service.js";
+import { loggerService } from './logger.service.js'
+
 
 const PAGE_SIZE = 3
 export const bugBackService = {
@@ -11,9 +13,6 @@ export const bugBackService = {
 }
 
 const bugs = utilService.readJsonFile('data/bug.json')
-//console.log(bugs)
-
-
 
 
 function query(filterBy) {
@@ -61,21 +60,33 @@ function getById(bugId) {
     return Promise.resolve(bug)
 }
 
-function remove(bugId) {
+function remove(bugId , loggedinUser) {
     const bugIdx = bugs.findIndex(bug => bug._id === bugId)
+    if (idx === -1) return Promise.reject('No Such bug')
+    const bug = bugs[idx]
+    if (!loggedinUser.isAdmin &&
+        bug.owner._id !== loggedinUser._id) {
+        return Promise.reject('Not your bug')
+    }
     bugs.splice(bugIdx, 1)
     return _saveBugsToFile()
 }
 
-function save(bug) {
-    console.log(bug)
+function save(bug, loggedinUser) {
+    console.log(bug, loggedinUser)
+    
 
     if (bug._id) {
         const bugIdx = bugs.findIndex(currBug => currBug._id === bug._id)
+        if (!loggedinUser.isAdmin &&
+            carToUpdate.owner._id !== loggedinUser._id) {
+            return Promise.reject('Not your bug')
+        }
         bugs[bugIdx] = bug
     } else {
         bug._id = utilService.makeId()
         bug.createdAt=Date.now()
+        bug.creator = loggedinUser
         bugs.unshift(bug)
         console.log(bug)
     }

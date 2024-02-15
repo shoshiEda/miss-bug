@@ -64,7 +64,6 @@ else
             ...filterBy,
         })
         )
-        console.log(filterBy)
     }
 
     function onAddBug() {
@@ -72,7 +71,8 @@ else
             title: prompt('Bug title?'),
             severity: +prompt('Bug severity?'),
         }
-        if(!title) return
+        if(!bug.title) return
+        
         bugService
             .save(bug)
             .then((savedBug) => {
