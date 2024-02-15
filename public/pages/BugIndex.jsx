@@ -10,7 +10,7 @@ export function BugIndex() {
     const [bugs, setBugs] = useState(null)
     const [filterBy, setFilterBy] = useState(bugService.getDefaultFilter())
     const debounceOnSetFilter = useRef(utilService.debounce(onSetFilter, 500))
-
+    const [maxPage,setMaxPage]=useState(1)
     
 
     useEffect(() => {
@@ -19,11 +19,15 @@ export function BugIndex() {
 
     function loadBugs() {
         bugService.query(filterBy)
-        .then(bugs => setBugs(bugs))
+        .then(({bugs,maxPage}) => {
+            setMaxPage(maxPage)
+            setBugs(bugs)
+        })
         .catch(err => console.log('err:', err))
     }
 
     function onChangePageIdx(diff) {
+        if(filterBy.pageIdx+diff>=maxPage) return
         setFilterBy(prevFilter => {
             let newPageIdx = prevFilter.pageIdx + diff
             if (newPageIdx < 0) newPageIdx = 0

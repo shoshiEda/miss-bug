@@ -44,12 +44,14 @@ function query(filterBy) {
     if (filterBy.sortBy==='createdAt') {
         bugsToReturn = bugsToReturn.sort((b1,b2)=>b2.createdAt - b1.createdAt)
     }
+    const maxPage=Math.ceil(bugsToReturn.length/PAGE_SIZE)
+   
 
     if (filterBy.pageIdx !== undefined) {
         const startIdx = filterBy.pageIdx * PAGE_SIZE
         bugsToReturn = bugsToReturn.slice(startIdx, startIdx + PAGE_SIZE)
     }
-    return Promise.resolve(bugsToReturn)
+    return Promise.resolve({bugs: bugsToReturn,maxPage})
 }
 
 function getById(bugId) {
