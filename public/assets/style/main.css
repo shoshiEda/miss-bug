@@ -71,6 +71,11 @@ nav a:hover {
     flex-wrap: wrap;
 }
 
+.user-bug-list{
+    list-style:disc;
+    flex-direction: column;
+}
+
 .bug-preview {
     background-color: #333;
     color: whitesmoke;

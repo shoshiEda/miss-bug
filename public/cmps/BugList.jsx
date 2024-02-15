@@ -4,10 +4,11 @@ import { userService } from "../services/user.service.js";
 const { Link } = ReactRouterDOM
 
 
-export function BugList({ bugs, onRemoveBug, onEditBug }) {
+export function BugList({ bugs, onRemoveBug, onEditBug,isUser }) {
 
     const user = userService.getLoggedinUser()
-    console.log(user,bugs)
+   
+
 
     function isOwner(bug) {
         if (!user) return false
@@ -17,18 +18,26 @@ export function BugList({ bugs, onRemoveBug, onEditBug }) {
 
     if (!bugs) return <div>Loading...</div>
     return (
-        <ul className="bug-list">
+        <section>
+        {!isUser && <ul className="bug-list">
             {bugs.map((bug) => (
-                <li className="bug-preview" key={bug._id}>
+            <li key={bug._id} className="bug-preview" >
+                    
                     <BugPreview bug={bug} />
-                    {isOwner(bug) &&  <div>
+                    {isOwner(bug) &&  (<div>
                         <button onClick={() => onRemoveBug(bug._id)}>x</button>
                         <button onClick={() => onEditBug(bug)}>Edit</button>
-                    </div>}
+                        </div>
+                    )}
                     <Link to={`/bug/${bug._id}`}>Details</Link>
-                </li>
-            ))
-            }
-        </ul >
-    )
-}
+                   
+                    </li>
+    ))}
+        </ul >}
+        {isUser && <ul className="user-bug-list">
+            {bugs.map((bug) => (
+            <li key={bug._id} className="user-bug" >{bug.title}</li>
+    ))}
+        </ul >}
+        </section>
+    )}

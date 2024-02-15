@@ -21,8 +21,11 @@ app.get('/api/bug', (req, res) => {
         severity: req.query.severity || 0,
         labels: req.query.labels || '',
         pageIdx: req.query.pageIdx,
-        sortBy: req.query.sortBy || ''
+        sortBy: req.query.sortBy || '',
+        userId:req.query.userId || ''
     }
+   
+
     bugBackService.query(filterBy)
         .then(bugs =>  res.send(bugs))
         .catch(err => {

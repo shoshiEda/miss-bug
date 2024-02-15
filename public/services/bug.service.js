@@ -14,6 +14,7 @@ export const bugService = {
     save,
     remove,
     getDefaultFilter,
+  
 }
 
 
@@ -35,6 +36,8 @@ function remove(bugId) {
 
     //return storageService.remove(STORAGE_KEY, bugId)
 }
+
+
 
 function save(bug) {
     

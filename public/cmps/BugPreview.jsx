@@ -1,7 +1,7 @@
 
 
 export function BugPreview({bug}) {
-console.log(bug)
+
     return <article>
         <h4>{bug.title}</h4>
         <h1>🐛</h1>
